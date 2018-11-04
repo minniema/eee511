@@ -17,13 +17,13 @@ testCatPTO=CatDC.Category(round(length(dataPTO.PTO)*.7)+1:end,:);
 
 
 %% Training neural network for DC
-% net1 = feedforwardnet(10);
-% net1=train(net1,Tnorm',y');
-% ynet=sim(net1,Tnorm');
-% ynetn=sim(net1,Tnewnorm');
-% perf1 = mse(net1,Tnorm',y');
+net1 = feedforwardnet(10);
+net1=train(net1,trainDC',trainCatDC');
+%ynet=sim(net1,);
+ynetn=sim(net1,testDC');
+perf1 = mse(net1,testDC',testCatDC');
 % figure
-% scatter(T,y)
+% scatter(,y)
 % hold on
 % scatter(T,ynet)
 % hold on 
@@ -32,3 +32,7 @@ testCatPTO=CatDC.Category(round(length(dataPTO.PTO)*.7)+1:end,:);
 % xlabel("Scaled Time Index ")
 % ylabel("Scaled Output ")
 % legend('Original','Train Output','30 Point Estimation')
+
+%% train SVM
+svm= fitcsvm(trainDC, trainCatDC);
+[DCsvm, svmscore] =  predict(svm, testDC);
